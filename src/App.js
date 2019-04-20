@@ -12,14 +12,14 @@ import Write from './views/Write'
 class App extends Component {
   render() {
     return (
-      <Provider store={ store }>
+      <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Header/>
-            <Route exact path="/" component={ Home }/>
-            <Route exact path="/login" component={ Login }/>
-            <Route exact path="/write" component={ Write }/>
-            <Route exact path="/detail/:id" component={ Detail }/>
+            <Header />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/write" component={Write} />
+            <Route exact path="/detail/:id" component={Detail} />
           </div>
         </BrowserRouter>
       </Provider>

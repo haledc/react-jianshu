@@ -16,7 +16,7 @@ export const LoginBox = styled.div`
   padding-top: 20px;
   margin: 100px auto;
   background: #fff;
-  box-shadow: 0 0 8px rgba(0,0,0,.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 `
 
 export const Input = styled.input`

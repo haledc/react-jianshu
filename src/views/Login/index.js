@@ -15,26 +15,42 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(mapState, mapDispatch)
+@connect(
+  mapState,
+  mapDispatch
+)
 class Login extends Component {
-
   render() {
     const { isLogin } = this.props
     console.log(isLogin)
     return (
       <Fragment>
-        {
-          isLogin
-            ? <Redirect to="/" />
-            : (<LoginWrapper>
-              <LoginBox>
-                <Input placeholder="账户" ref={ input => this.username = input } />
-                <Input placeholder="密码" ref={ input => this.password = input } type="password" />
-                <Button onClick={ () => this.props.login(this.username.value, this.password.value) }>登录</Button>
-              </LoginBox>
-            </LoginWrapper>)
-        }
-      </Fragment>)
+        {isLogin ? (
+          <Redirect to="/" />
+        ) : (
+          <LoginWrapper>
+            <LoginBox>
+              <Input
+                placeholder="账户"
+                ref={input => (this.username = input)}
+              />
+              <Input
+                placeholder="密码"
+                ref={input => (this.password = input)}
+                type="password"
+              />
+              <Button
+                onClick={() =>
+                  this.props.login(this.username.value, this.password.value)
+                }
+              >
+                登录
+              </Button>
+            </LoginBox>
+          </LoginWrapper>
+        )}
+      </Fragment>
+    )
   }
 }
 

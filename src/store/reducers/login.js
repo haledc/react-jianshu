@@ -25,7 +25,8 @@ export const actionCreators = {
   },
   login(username, password) {
     return dispatch => {
-      axios.get(`/api/login.json?username=${username}&password=${password}`)
+      axios
+        .get(`/api/login.json?username=${username}&password=${password}`)
         .then(res => {
           if (res.data.success) {
             dispatch(this.changeLoginStatus(true))

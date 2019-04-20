@@ -58,7 +58,8 @@ export const actionCreators = {
 
   getHomeInfo() {
     return dispatch => {
-      axios.get('/api/home.json')
+      axios
+        .get('/api/home.json')
         .then(res => {
           if (res.data.success) {
             dispatch(this.changeHomeInfo(res.data.data))
@@ -70,7 +71,8 @@ export const actionCreators = {
 
   getMoreList(page) {
     return dispatch => {
-      axios.get(`/api/homeList.json?page=${page}`)
+      axios
+        .get(`/api/homeList.json?page=${page}`)
         .then(res => {
           if (res.data.success) {
             dispatch(this.addHomeList(res.data.data, page + 1))

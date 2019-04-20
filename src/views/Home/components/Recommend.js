@@ -9,20 +9,13 @@ const mapState = state => ({
 
 @connect(mapState)
 class Recommend extends PureComponent {
-
   render() {
-
     const { recommendList } = this.props
     return (
       <RecommendWrapper>
-        {
-          recommendList.map(item => (
-            <RecommendItem
-              key={ item.get('id') }
-              imgUrl={ item.get('imgUrl') }
-            />
-          ))
-        }
+        {recommendList.map(item => (
+          <RecommendItem key={item.get('id')} imgUrl={item.get('imgUrl')} />
+        ))}
       </RecommendWrapper>
     )
   }

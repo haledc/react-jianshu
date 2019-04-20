@@ -21,7 +21,6 @@ export default (state = defaultState, action) => {
 }
 
 export const actionCreators = {
-
   changeDetailInfo(data) {
     return {
       type: type.CHANGE_DETAIL_INFO,
@@ -32,7 +31,8 @@ export const actionCreators = {
 
   getDetail(id) {
     return dispatch => {
-      axios.get(`/api/detail.json?id=${id}`)
+      axios
+        .get(`/api/detail.json?id=${id}`)
         .then(res => {
           if (res.data.success) {
             dispatch(this.changeDetailInfo(res.data.data))

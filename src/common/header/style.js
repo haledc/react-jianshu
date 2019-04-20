@@ -4,7 +4,7 @@ import logoPic from '../../static/logo.png'
 export const HeaderWrapper = styled.div`
   z-index: 1;
   height: 56px;
-  border-bottom: 1px solid #f0f0f0
+  border-bottom: 1px solid #f0f0f0;
 `
 
 export const Logo = styled.div`
@@ -19,7 +19,7 @@ export const Logo = styled.div`
 `
 
 export const Nav = styled.div`
-  width:960px;
+  width: 960px;
   height: 100%;
   padding-right: 70px;
   box-sizing: border-box;
@@ -59,7 +59,7 @@ export const SearchWrapper = styled.div`
     text-align: center;
     &.focused {
       background: #777;
-      color: #fff
+      color: #fff;
     }
   }
 `
@@ -68,44 +68,44 @@ export const NavSearch = styled.input.attrs({
   placeholder: '搜索'
 })`
   width: 160px;
-	height: 38px;
-	padding: 0 30px 0 20px;
-	margin-top: 9px;
-	margin-left: 20px;
-	box-sizing: border-box;
-	border: none;
-	outline: none;
-	border-radius: 19px;
-	background: #eee;
-	font-size: 14px;
-	color: #666;
-	&::placeholder {
-		color: #999;
-	}
-	&.focused {
-		width: 240px;
-	}
-	&.slide-enter {
-		transition: all .5s ease-out;
-	}
-	&.slide-enter-active {
-		width: 240px;
-	}
-	&.slide-exit {
-		transition: all .5s ease-out;
-	}
-	&.slide-exit-active {
-		width: 160px;
-	}
+  height: 38px;
+  padding: 0 30px 0 20px;
+  margin-top: 9px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: 19px;
+  background: #eee;
+  font-size: 14px;
+  color: #666;
+  &::placeholder {
+    color: #999;
+  }
+  &.focused {
+    width: 240px;
+  }
+  &.slide-enter {
+    transition: all 0.5s ease-out;
+  }
+  &.slide-enter-active {
+    width: 240px;
+  }
+  &.slide-exit {
+    transition: all 0.5s ease-out;
+  }
+  &.slide-exit-active {
+    width: 160px;
+  }
 `
 
 export const SearchInfo = styled.div`
   position: absolute;
-  top:56px;
+  top: 56px;
   left: 0;
   width: 240px;
   padding: 0 20px;
-  box-shadow: 0 0 8px rgba(0,0,0,.2);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   background: #fff;
 `
 
@@ -130,7 +130,7 @@ export const SearchInfoSwitch = styled.span`
     float: left;
     font-size: 12px;
     margin-right: 2px;
-    transition: all .2s ease-in;
+    transition: all 0.2s ease-in;
     transform-origin: center center;
   }
 `
@@ -171,5 +171,4 @@ export const Button = styled.div`
     color: #fff;
     background: #ec6149;
   }
-  
 `

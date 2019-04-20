@@ -7,9 +7,9 @@ import { FontStyle } from './static/iconfont/iconfont'
 
 const app = (
   <Fragment>
-    <App/>
-    <GlobalStyle/>
-    <FontStyle/>
+    <App />
+    <GlobalStyle />
+    <FontStyle />
   </Fragment>
 )
 

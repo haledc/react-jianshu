@@ -35,7 +35,6 @@ export default (state = defaultState, action) => {
 }
 
 export const actionCreator = {
-
   searchFocus() {
     return {
       type: types.SEARCH_FOCUS
@@ -75,10 +74,10 @@ export const actionCreator = {
     }
   },
 
-
   getList() {
     return dispatch => {
-      axios.get('/api/headerList.json')
+      axios
+        .get('/api/headerList.json')
         .then(res => {
           if (res.data.success === true) {
             dispatch(this.changeList(res.data.data))
@@ -87,5 +86,4 @@ export const actionCreator = {
         .catch(e => console.log(e))
     }
   }
-
 }

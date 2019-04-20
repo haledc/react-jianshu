@@ -16,10 +16,12 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(mapState, mapDispatch)
+@connect(
+  mapState,
+  mapDispatch
+)
 @withRouter
 class Detail extends PureComponent {
-
   componentDidMount() {
     this.props.getDetail(this.props.match.params.id)
   }
@@ -29,9 +31,8 @@ class Detail extends PureComponent {
 
     return (
       <DetailWrapper>
-        <Header>{ title }</Header>
-        <Content dangerouslySetInnerHTML={ { __html: content } }>
-        </Content>
+        <Header>{title}</Header>
+        <Content dangerouslySetInnerHTML={{ __html: content }} />
       </DetailWrapper>
     )
   }

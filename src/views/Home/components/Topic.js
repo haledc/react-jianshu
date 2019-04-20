@@ -9,30 +9,26 @@ const mapState = state => ({
 
 @connect(mapState)
 class Topic extends PureComponent {
-
   render() {
     const { topicList } = this.props
 
     return (
       <TopicWrapper>
-        {
-          topicList.map(item => {
-            return (
-              <TopicItem key={ item.get('id') }>
-                <img className="topic-pic"
-                     src={ item.get('imgUrl') }
-                     alt="topic-pic"
-                />
-                { item.get('title') }
-              </TopicItem>
-            )
-          })
-        }
-
+        {topicList.map(item => {
+          return (
+            <TopicItem key={item.get('id')}>
+              <img
+                className="topic-pic"
+                src={item.get('imgUrl')}
+                alt="topic-pic"
+              />
+              {item.get('title')}
+            </TopicItem>
+          )
+        })}
       </TopicWrapper>
     )
   }
 }
-
 
 export default Topic

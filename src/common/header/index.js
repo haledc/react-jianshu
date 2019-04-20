@@ -45,7 +45,7 @@ const mapDispatch = dispatch => ({
     dispatch(actionCreator.mouseLeave())
   },
   handleChangePage(page, totalPage, iconDom) {
-    let originAngle = iconDom.style.transform.replace(/[^0-9]/ig, '')
+    let originAngle = iconDom.style.transform.replace(/[^0-9]/gi, '')
     if (originAngle) {
       originAngle = parseInt(originAngle, 10)
     } else {
@@ -64,11 +64,26 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(mapState, mapDispatch)
+@connect(
+  mapState,
+  mapDispatch
+)
 class Header extends Component {
-
   render() {
-    const {focused, list, page, isLogin, totalPage, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage, logout} = this.props
+    const {
+      focused,
+      list,
+      page,
+      isLogin,
+      totalPage,
+      mouseIn,
+      handleInputFocus,
+      handleInputBlur,
+      handleMouseEnter,
+      handleMouseLeave,
+      handleChangePage,
+      logout
+    } = this.props
     const newList = list.toJS()
     let pageList = []
 
@@ -76,7 +91,7 @@ class Header extends Component {
       for (let i = (page - 1) * 10; i < page * 10; i++) {
         if (newList[i] !== undefined) {
           pageList.push(
-            <SearchInfoItem key={ newList[i] }>{ newList[i] }</SearchInfoItem>
+            <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
           )
         }
       }
@@ -91,46 +106,55 @@ class Header extends Component {
           <Nav>
             <NavItem className="left active">首页</NavItem>
             <NavItem className="left">下载App</NavItem>
-            {
-              isLogin
-                ? <NavItem className="right" onClick={ logout }>退出</NavItem>
-                : <Link to="/login">
-                  <NavItem className="right">登录</NavItem>
-                </Link>
-            }
+            {isLogin ? (
+              <NavItem className="right" onClick={logout}>
+                退出
+              </NavItem>
+            ) : (
+              <Link to="/login">
+                <NavItem className="right">登录</NavItem>
+              </Link>
+            )}
             <NavItem className="right">
               <i className="iconfont">&#xe65a;</i>
             </NavItem>
             <SearchWrapper>
-              <CSSTransition
-                in={ focused }
-                timeout={ 500 }
-                classNames="slide"
-              >
+              <CSSTransition in={focused} timeout={500} classNames="slide">
                 <NavSearch
-                  className={ focused ? 'focused' : '' }
-                  onFocus={ () => handleInputFocus(list) }
-                  onBlur={ handleInputBlur }
+                  className={focused ? 'focused' : ''}
+                  onFocus={() => handleInputFocus(list)}
+                  onBlur={handleInputBlur}
                 />
               </CSSTransition>
-              <i className={ focused ? 'focused iconfont zoom' : 'iconfont zoom' }>&#xe62e;</i>
-              { (focused || mouseIn)
-              && <SearchInfo
-                onMouseEnter={ handleMouseEnter }
-                onMouseLeave={ handleMouseLeave }
+              <i
+                className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}
               >
-                <SearchInfoTitle>
-                  热门搜索
-                  <SearchInfoSwitch onClick={ () => handleChangePage(page, totalPage, this.spinIcon) }>
-                    <i ref={ icon => this.spinIcon = icon } className="iconfont spin">&#xe851;</i>
-                    换一批
-                  </SearchInfoSwitch>
-                </SearchInfoTitle>
-                <div>
-                  { pageList }
-                </div>
-              </SearchInfo>
-              }
+                &#xe62e;
+              </i>
+              {(focused || mouseIn) && (
+                <SearchInfo
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <SearchInfoTitle>
+                    热门搜索
+                    <SearchInfoSwitch
+                      onClick={() =>
+                        handleChangePage(page, totalPage, this.spinIcon)
+                      }
+                    >
+                      <i
+                        ref={icon => (this.spinIcon = icon)}
+                        className="iconfont spin"
+                      >
+                        &#xe851;
+                      </i>
+                      换一批
+                    </SearchInfoSwitch>
+                  </SearchInfoTitle>
+                  <div>{pageList}</div>
+                </SearchInfo>
+              )}
             </SearchWrapper>
           </Nav>
           <Addition>

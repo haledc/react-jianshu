@@ -105,7 +105,6 @@ export const WriterWrapper = styled.div`
 export const HomeRight = styled.div`
   float: right;
   width: 240px;
-  
 `
 
 export const BackUp = styled.div`

@@ -8,4 +8,4 @@ const LoadableComponent = Loadable({
   }
 })
 
-export default () => <LoadableComponent/>
+export default () => <LoadableComponent />
