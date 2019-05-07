@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { createRef } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -64,112 +64,104 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(
-  mapState,
-  mapDispatch
-)
-class Header extends Component {
-  render() {
-    const {
-      focused,
-      list,
-      page,
-      isLogin,
-      totalPage,
-      mouseIn,
-      handleInputFocus,
-      handleInputBlur,
-      handleMouseEnter,
-      handleMouseLeave,
-      handleChangePage,
-      logout
-    } = this.props
-    const newList = list.toJS()
-    let pageList = []
+const Header = props => {
+  const spinIcon = createRef()
 
-    if (newList.length) {
-      for (let i = (page - 1) * 10; i < page * 10; i++) {
-        if (newList[i] !== undefined) {
-          pageList.push(
-            <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
-          )
-        }
+  const {
+    focused,
+    list,
+    page,
+    isLogin,
+    totalPage,
+    mouseIn,
+    handleInputFocus,
+    handleInputBlur,
+    handleMouseEnter,
+    handleMouseLeave,
+    handleChangePage,
+    logout
+  } = props
+  const newList = list.toJS()
+  let pageList = []
+
+  if (newList.length) {
+    for (let i = (page - 1) * 10; i < page * 10; i++) {
+      if (newList[i] !== undefined) {
+        pageList.push(
+          <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+        )
       }
     }
-
-    return (
-      <div>
-        <HeaderWrapper>
-          <Link to="/">
-            <Logo />
-          </Link>
-          <Nav>
-            <NavItem className="left active">首页</NavItem>
-            <NavItem className="left">下载App</NavItem>
-            {isLogin ? (
-              <NavItem className="right" onClick={logout}>
-                退出
-              </NavItem>
-            ) : (
-              <Link to="/login">
-                <NavItem className="right">登录</NavItem>
-              </Link>
-            )}
-            <NavItem className="right">
-              <i className="iconfont">&#xe65a;</i>
-            </NavItem>
-            <SearchWrapper>
-              <CSSTransition in={focused} timeout={500} classNames="slide">
-                <NavSearch
-                  className={focused ? 'focused' : ''}
-                  onFocus={() => handleInputFocus(list)}
-                  onBlur={handleInputBlur}
-                />
-              </CSSTransition>
-              <i
-                className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}
-              >
-                &#xe62e;
-              </i>
-              {(focused || mouseIn) && (
-                <SearchInfo
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <SearchInfoTitle>
-                    热门搜索
-                    <SearchInfoSwitch
-                      onClick={() =>
-                        handleChangePage(page, totalPage, this.spinIcon)
-                      }
-                    >
-                      <i
-                        ref={icon => (this.spinIcon = icon)}
-                        className="iconfont spin"
-                      >
-                        &#xe851;
-                      </i>
-                      换一批
-                    </SearchInfoSwitch>
-                  </SearchInfoTitle>
-                  <div>{pageList}</div>
-                </SearchInfo>
-              )}
-            </SearchWrapper>
-          </Nav>
-          <Addition>
-            <Link to="/write">
-              <Button className="writting">
-                <i className="iconfont">&#xe608;</i>
-                写文章
-              </Button>
-            </Link>
-            <Button className="reg">注册</Button>
-          </Addition>
-        </HeaderWrapper>
-      </div>
-    )
   }
+
+  return (
+    <div>
+      <HeaderWrapper>
+        <Link to="/">
+          <Logo />
+        </Link>
+        <Nav>
+          <NavItem className="left active">首页</NavItem>
+          <NavItem className="left">下载App</NavItem>
+          {isLogin ? (
+            <NavItem className="right" onClick={logout}>
+              退出
+            </NavItem>
+          ) : (
+            <Link to="/login">
+              <NavItem className="right">登录</NavItem>
+            </Link>
+          )}
+          <NavItem className="right">
+            <i className="iconfont">&#xe65a;</i>
+          </NavItem>
+          <SearchWrapper>
+            <CSSTransition in={focused} timeout={500} classNames="slide">
+              <NavSearch
+                className={focused ? 'focused' : ''}
+                onFocus={() => handleInputFocus(list)}
+                onBlur={handleInputBlur}
+              />
+            </CSSTransition>
+            <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>
+              &#xe62e;
+            </i>
+            {(focused || mouseIn) && (
+              <SearchInfo
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <SearchInfoTitle>
+                  热门搜索
+                  <SearchInfoSwitch
+                    onClick={() => handleChangePage(page, totalPage, spinIcon)}
+                  >
+                    <i ref={spinIcon} className="iconfont spin">
+                      &#xe851;
+                    </i>
+                    换一批
+                  </SearchInfoSwitch>
+                </SearchInfoTitle>
+                <div>{pageList}</div>
+              </SearchInfo>
+            )}
+          </SearchWrapper>
+        </Nav>
+        <Addition>
+          <Link to="/write">
+            <Button className="writting">
+              <i className="iconfont">&#xe608;</i>
+              写文章
+            </Button>
+          </Link>
+          <Button className="reg">注册</Button>
+        </Addition>
+      </HeaderWrapper>
+    </div>
+  )
 }
 
-export default Header
+export default connect(
+  mapState,
+  mapDispatch
+)(Header)

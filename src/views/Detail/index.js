@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -16,26 +16,24 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(
-  mapState,
-  mapDispatch
-)
-@withRouter
-class Detail extends PureComponent {
-  componentDidMount() {
-    this.props.getDetail(this.props.match.params.id)
-  }
+const Detail = props => {
+  const { title, content } = props
 
-  render() {
-    const { title, content } = this.props
+  useEffect(() => {
+    props.getDetail(props.match.params.id)
+  })
 
-    return (
-      <DetailWrapper>
-        <Header>{title}</Header>
-        <Content dangerouslySetInnerHTML={{ __html: content }} />
-      </DetailWrapper>
-    )
-  }
+  return (
+    <DetailWrapper>
+      <Header>{title}</Header>
+      <Content dangerouslySetInnerHTML={{ __html: content }} />
+    </DetailWrapper>
+  )
 }
 
-export default Detail
+export default withRouter(
+  connect(
+    mapState,
+    mapDispatch
+  )(Detail)
+)

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { createRef } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
@@ -15,43 +15,30 @@ const mapDispatch = dispatch => ({
   }
 })
 
-@connect(
-  mapState,
-  mapDispatch
-)
-class Login extends Component {
-  render() {
-    const { isLogin } = this.props
-    console.log(isLogin)
-    return (
-      <Fragment>
-        {isLogin ? (
-          <Redirect to="/" />
-        ) : (
-          <LoginWrapper>
-            <LoginBox>
-              <Input
-                placeholder="账户"
-                ref={input => (this.username = input)}
-              />
-              <Input
-                placeholder="密码"
-                ref={input => (this.password = input)}
-                type="password"
-              />
-              <Button
-                onClick={() =>
-                  this.props.login(this.username.value, this.password.value)
-                }
-              >
-                登录
-              </Button>
-            </LoginBox>
-          </LoginWrapper>
-        )}
-      </Fragment>
-    )
-  }
+const Login = props => {
+  const { isLogin } = props
+  const username = createRef()
+  const password = createRef()
+  return (
+    <>
+      {isLogin ? (
+        <Redirect to="/" />
+      ) : (
+        <LoginWrapper>
+          <LoginBox>
+            <Input placeholder="账户" ref={username} />
+            <Input placeholder="密码" ref={password} type="password" />
+            <Button onClick={() => props.login(username.value, password.value)}>
+              登录
+            </Button>
+          </LoginBox>
+        </LoginWrapper>
+      )}
+    </>
+  )
 }
 
-export default Login
+export default connect(
+  mapState,
+  mapDispatch
+)(Login)
