@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { ListItem, ListInfo, LoadMore } from '../style'
-import { actionCreators } from '../../../store/reducers/home'
+import { actions } from '../store'
 
 const mapState = state => ({
   articleList: state.getIn(['home', 'articleList']),
@@ -12,7 +12,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getMoreList(page) {
-    dispatch(actionCreators.getMoreList(page))
+    dispatch(actions.getMoreList(page))
   }
 })
 

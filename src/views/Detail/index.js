@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { DetailWrapper, Header, Content } from './style'
-import { actionCreators } from '../../store/reducers/detail'
+import { actions } from './store'
 
 const mapState = state => ({
   title: state.getIn(['detail', 'title']),
@@ -12,7 +12,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getDetail(id) {
-    dispatch(actionCreators.getDetail(id))
+    dispatch(actions.getDetail(id))
   }
 })
 

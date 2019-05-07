@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import { LoginWrapper, LoginBox, Input, Button } from './style'
-import { actionCreators } from '../../store/reducers/login'
+import { actions } from './store'
 
 const mapState = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
@@ -11,7 +11,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   login(username, password) {
-    dispatch(actionCreators.login(username, password))
+    dispatch(actions.login(username, password))
   }
 })
 

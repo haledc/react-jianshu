@@ -17,8 +17,8 @@ import {
   Button
 } from './style'
 import { CSSTransition } from 'react-transition-group'
-import { actionCreator } from '../../store/reducers/header'
-import { actionCreators as loginActionCreators } from '../../store/reducers/login'
+import { actions } from './store'
+import { actions as loginActions } from '../../views/login/store'
 
 const mapState = state => ({
   // focused: state.get('header').get('focused')
@@ -32,17 +32,17 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   handleInputFocus(list) {
-    list.size === 0 && dispatch(actionCreator.getList())
-    dispatch(actionCreator.searchFocus())
+    list.size === 0 && dispatch(actions.getList())
+    dispatch(actions.searchFocus())
   },
   handleInputBlur() {
-    dispatch(actionCreator.searchBlur())
+    dispatch(actions.searchBlur())
   },
   handleMouseEnter() {
-    dispatch(actionCreator.mouseEnter())
+    dispatch(actions.mouseEnter())
   },
   handleMouseLeave() {
-    dispatch(actionCreator.mouseLeave())
+    dispatch(actions.mouseLeave())
   },
   handleChangePage(page, totalPage, iconDom) {
     let originAngle = iconDom.style.transform.replace(/[^0-9]/gi, '')
@@ -54,13 +54,13 @@ const mapDispatch = dispatch => ({
     console.log(originAngle)
     iconDom.style.transform = `rotate(${originAngle + 360}deg)`
     if (page < totalPage) {
-      dispatch(actionCreator.changePage(page + 1))
+      dispatch(actions.changePage(page + 1))
     } else {
-      dispatch(actionCreator.changePage(1))
+      dispatch(actions.changePage(1))
     }
   },
   logout() {
-    dispatch(loginActionCreators.changeLoginStatus(false))
+    dispatch(loginActions.changeLoginStatus(false))
   }
 })
 
