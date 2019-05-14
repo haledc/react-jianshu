@@ -1,4 +1,9 @@
-import React from 'react'
+/*
+ * @Author: Hale
+ * @Description:
+ * @Date: 2018-11-10
+ */
+import React, { memo } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -16,7 +21,7 @@ const mapDispatch = dispatch => ({
   }
 })
 
-const List = props => {
+const List = memo(props => {
   const { articleList, articlePage, getMoreList } = props
 
   return (
@@ -35,7 +40,7 @@ const List = props => {
       <LoadMore onClick={() => getMoreList(articlePage)}>阅读更多</LoadMore>
     </div>
   )
-}
+})
 
 export default connect(
   mapState,

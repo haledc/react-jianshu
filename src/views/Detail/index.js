@@ -1,4 +1,9 @@
-import React, { useEffect } from 'react'
+/*
+ * @Author: Hale
+ * @Description:
+ * @Date: 2018-11-10
+ */
+import React, { useEffect, memo } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -16,7 +21,7 @@ const mapDispatch = dispatch => ({
   }
 })
 
-const Detail = props => {
+const Detail = memo(props => {
   const { title, content } = props
 
   useEffect(() => {
@@ -29,7 +34,7 @@ const Detail = props => {
       <Content dangerouslySetInnerHTML={{ __html: content }} />
     </DetailWrapper>
   )
-}
+})
 
 export default withRouter(
   connect(

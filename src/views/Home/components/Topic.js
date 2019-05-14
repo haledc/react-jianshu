@@ -1,4 +1,9 @@
-import React from 'react'
+/*
+ * @Author: Hale
+ * @Description:
+ * @Date: 2018-11-10
+ */
+import React, { memo } from 'react'
 import { connect } from 'react-redux'
 
 import { TopicWrapper, TopicItem } from '../style'
@@ -7,7 +12,7 @@ const mapState = state => ({
   topicList: state.getIn(['home', 'topicList'])
 })
 
-const Topic = props => {
+const Topic = memo(props => {
   const { topicList } = props
 
   return (
@@ -26,6 +31,6 @@ const Topic = props => {
       })}
     </TopicWrapper>
   )
-}
+})
 
 export default connect(mapState)(Topic)
