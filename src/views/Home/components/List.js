@@ -1,8 +1,3 @@
-/*
- * @Author: Hale
- * @Description:
- * @Date: 2018-11-10
- */
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -10,20 +5,18 @@ import { Link } from 'react-router-dom'
 import { ListItem, ListInfo, LoadMore } from '../style'
 import { actions } from '../store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   articleList: state.getIn(['home', 'articleList']),
   articlePage: state.getIn(['home', 'articlePage'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   getMoreList(page) {
     dispatch(actions.getMoreList(page))
   }
 })
 
-const List = memo(props => {
-  const { articleList, articlePage, getMoreList } = props
-
+const List = memo(({ articleList, articlePage, getMoreList }) => {
   return (
     <div>
       {articleList.map((item, index) => (
@@ -43,6 +36,6 @@ const List = memo(props => {
 })
 
 export default connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )(List)

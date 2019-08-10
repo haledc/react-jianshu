@@ -5,18 +5,17 @@ import { Redirect } from 'react-router-dom'
 import { LoginWrapper, LoginBox, Input, Button } from './style'
 import { actions } from './store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   login(username, password) {
     dispatch(actions.login(username, password))
   }
 })
 
-const Login = props => {
-  const { isLogin } = props
+const Login = ({ isLogin, login }) => {
   const username = createRef()
   const password = createRef()
   return (
@@ -26,9 +25,9 @@ const Login = props => {
       ) : (
         <LoginWrapper>
           <LoginBox>
-            <Input placeholder="账户" ref={username} />
-            <Input placeholder="密码" ref={password} type="password" />
-            <Button onClick={() => props.login(username.value, password.value)}>
+            <Input placeholder="账户" ref={username} value="hale" />
+            <Input placeholder="密码" ref={password} type="password" value="123456" />
+            <Button onClick={() => login(username.value, password.value)}>
               登录
             </Button>
           </LoginBox>
@@ -39,6 +38,6 @@ const Login = props => {
 }
 
 export default connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )(Login)

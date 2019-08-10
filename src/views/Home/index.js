@@ -9,11 +9,12 @@ import { HomeWrapper, HomeLeft, HomeRight } from './style'
 import { actions } from './store'
 import { BackUp } from './style'
 
-const mapState = state => ({
-  showScroll: state.getIn(['home', 'showScroll'])
+const mapStateToProps = state => ({
+  showScroll: state.getIn(['home', 'showScroll']),
+  articleList: state.getIn(['home', 'articleList'])
 })
 
-const mapDispatch = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getHomeInfo() {
       return dispatch(actions.getHomeInfo())
@@ -28,12 +29,15 @@ const mapDispatch = dispatch => {
   }
 }
 
-const Home = props => {
+const Home = ({ showScroll, articleList, getHomeInfo, changeScrollShow }) => {
   useEffect(() => {
-    props.getHomeInfo()
+    getHomeInfo()
+  }, [articleList.length])
+
+  useEffect(() => {
     bindScrollEvent()
     return () => {
-      window.removeEventListener('scroll', props.changeScrollShow)
+      window.removeEventListener('scroll', changeScrollShow)
     }
   })
 
@@ -42,7 +46,7 @@ const Home = props => {
   }
 
   function bindScrollEvent() {
-    window.addEventListener('scroll', props.changeScrollShow)
+    window.addEventListener('scroll', changeScrollShow)
   }
 
   return (
@@ -60,12 +64,12 @@ const Home = props => {
         <Recommend />
         <Writer />
       </HomeRight>
-      {props.showScroll && <BackUp onClick={handleScrollTop}>回到顶部</BackUp>}
+      {showScroll && <BackUp onClick={handleScrollTop}>回到顶部</BackUp>}
     </HomeWrapper>
   )
 }
 
 export default connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )(Home)

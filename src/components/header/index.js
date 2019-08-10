@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ import { CSSTransition } from 'react-transition-group'
 import { actions } from './store'
 import { actions as loginActions } from '../../views/login/store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   // focused: state.get('header').get('focused')
   focused: state.getIn(['header', 'focused']),
   mouseIn: state.getIn(['header', 'mouseIn']),
@@ -30,7 +30,7 @@ const mapState = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   handleInputFocus(list) {
     list.size === 0 && dispatch(actions.getList())
     dispatch(actions.searchFocus())
@@ -45,13 +45,14 @@ const mapDispatch = dispatch => ({
     dispatch(actions.mouseLeave())
   },
   handleChangePage(page, totalPage, iconDom) {
-    let originAngle = iconDom.style.transform.replace(/[^0-9]/gi, '')
+    let originAngle =
+      iconDom.style.transform && iconDom.style.transform.replace(/[^0-9]/gi, '')
     if (originAngle) {
       originAngle = parseInt(originAngle, 10)
     } else {
       originAngle = 0
     }
-    console.log(originAngle)
+
     iconDom.style.transform = `rotate(${originAngle + 360}deg)`
     if (page < totalPage) {
       dispatch(actions.changePage(page + 1))
@@ -64,25 +65,23 @@ const mapDispatch = dispatch => ({
   }
 })
 
-const Header = props => {
-  const spinIcon = createRef()
-
-  const {
-    focused,
-    list,
-    page,
-    isLogin,
-    totalPage,
-    mouseIn,
-    handleInputFocus,
-    handleInputBlur,
-    handleMouseEnter,
-    handleMouseLeave,
-    handleChangePage,
-    logout
-  } = props
+const Header = ({
+  focused,
+  list,
+  page,
+  isLogin,
+  totalPage,
+  mouseIn,
+  handleInputFocus,
+  handleInputBlur,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleChangePage,
+  logout
+}) => {
+  let spinIcon
   const newList = list.toJS()
-  let pageList = []
+  const pageList = []
 
   if (newList.length) {
     for (let i = (page - 1) * 10; i < page * 10; i++) {
@@ -136,7 +135,7 @@ const Header = props => {
                   <SearchInfoSwitch
                     onClick={() => handleChangePage(page, totalPage, spinIcon)}
                   >
-                    <i ref={spinIcon} className="iconfont spin">
+                    <i ref={el => (spinIcon = el)} className="iconfont spin">
                       &#xe851;
                     </i>
                     换一批
@@ -149,7 +148,7 @@ const Header = props => {
         </Nav>
         <Addition>
           <Link to="/write">
-            <Button className="writting">
+            <Button className="writing">
               <i className="iconfont">&#xe608;</i>
               写文章
             </Button>
@@ -162,6 +161,6 @@ const Header = props => {
 }
 
 export default connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )(Header)

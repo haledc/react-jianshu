@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import logoPic from '../../static/logo.png'
+import logoPic from '../../assets/static/logo.png'
 
 export const HeaderWrapper = styled.div`
   z-index: 1;
@@ -167,7 +167,7 @@ export const Button = styled.div`
   &.reg {
     color: #ec6149;
   }
-  &.writting {
+  &.writing {
     color: #fff;
     background: #ec6149;
   }

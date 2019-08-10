@@ -1,19 +1,13 @@
-/*
- * @Author: Hale
- * @Description:
- * @Date: 2018-12-27
- */
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
 
 import { RecommendWrapper, RecommendItem } from '../style'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   recommendList: state.getIn(['home', 'recommendList'])
 })
 
-const Recommend = memo(props => {
-  const { recommendList } = props
+const Recommend = memo(({ recommendList }) => {
   return (
     <RecommendWrapper>
       {recommendList.map(item => (
@@ -23,4 +17,4 @@ const Recommend = memo(props => {
   )
 })
 
-export default connect(mapState)(Recommend)
+export default connect(mapStateToProps)(Recommend)

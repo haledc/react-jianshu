@@ -1,8 +1,3 @@
-/*
- * @Author: Hale
- * @Description:
- * @Date: 2018-11-10
- */
 import React, { useEffect, memo } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -10,22 +5,20 @@ import { withRouter } from 'react-router-dom'
 import { DetailWrapper, Header, Content } from './style'
 import { actions } from './store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   title: state.getIn(['detail', 'title']),
   content: state.getIn(['detail', 'content'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   getDetail(id) {
     dispatch(actions.getDetail(id))
   }
 })
 
-const Detail = memo(props => {
-  const { title, content } = props
-
+const Detail = memo(({ title, content, getDetail, match }) => {
   useEffect(() => {
-    props.getDetail(props.match.params.id)
+    getDetail(match.params.id)
   })
 
   return (
@@ -38,7 +31,7 @@ const Detail = memo(props => {
 
 export default withRouter(
   connect(
-    mapState,
-    mapDispatch
+    mapStateToProps,
+    mapDispatchToProps
   )(Detail)
 )
