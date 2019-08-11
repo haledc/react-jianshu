@@ -6,31 +6,29 @@ import List from './components/List'
 import Recommend from './components/Recommend'
 import Writer from './components/Writer'
 import { HomeWrapper, HomeLeft, HomeRight } from './style'
-import { actionCreators } from '../../store/reducers/home'
+import { actions } from './store'
 import { BackUp } from './style'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   showScroll: state.getIn(['home', 'showScroll'])
 })
 
-const mapDispatch = dispatch => {
-  return {
-    getHomeInfo() {
-      return dispatch(actionCreators.getHomeInfo())
-    },
-    changeScrollShow() {
-      if (document.documentElement.scrollTop > 300) {
-        dispatch(actionCreators.toggleScrollShow(true))
-      } else {
-        dispatch(actionCreators.toggleScrollShow(false))
-      }
+const mapDispatchToProps = dispatch => ({
+  getHomeInfo() {
+    return dispatch(actions.getHomeInfo())
+  },
+  changeScrollShow() {
+    if (document.documentElement.scrollTop > 300) {
+      dispatch(actions.toggleScrollShow(true))
+    } else {
+      dispatch(actions.toggleScrollShow(false))
     }
   }
-}
+})
 
 @connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )
 class Home extends PureComponent {
   componentDidMount() {

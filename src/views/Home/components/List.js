@@ -3,22 +3,22 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { ListItem, ListInfo, LoadMore } from '../style'
-import { actionCreators } from '../../../store/reducers/home'
+import { actions } from '../store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   articleList: state.getIn(['home', 'articleList']),
   articlePage: state.getIn(['home', 'articlePage'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   getMoreList(page) {
-    dispatch(actionCreators.getMoreList(page))
+    dispatch(actions.getMoreList(page))
   }
 })
 
 @connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )
 class List extends PureComponent {
   render() {

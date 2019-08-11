@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
 })
 
-@connect(mapState)
+@connect(mapStateToProps)
 class Write extends Component {
   render() {
     const { isLogin } = this.props
@@ -18,5 +18,4 @@ class Write extends Component {
   }
 }
 
-// export default connect(mapState, null)(Write)
 export default Write

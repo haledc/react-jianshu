@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 
 import { RecommendWrapper, RecommendItem } from '../style'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   recommendList: state.getIn(['home', 'recommendList'])
 })
 
-@connect(mapState)
+@connect(mapStateToProps)
 class Recommend extends PureComponent {
   render() {
     const { recommendList } = this.props

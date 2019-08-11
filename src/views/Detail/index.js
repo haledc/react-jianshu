@@ -3,22 +3,22 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { DetailWrapper, Header, Content } from './style'
-import { actionCreators } from '../../store/reducers/detail'
+import { actions } from './store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   title: state.getIn(['detail', 'title']),
   content: state.getIn(['detail', 'content'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   getDetail(id) {
-    dispatch(actionCreators.getDetail(id))
+    dispatch(actions.getDetail(id))
   }
 })
 
 @connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )
 @withRouter
 class Detail extends PureComponent {

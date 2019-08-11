@@ -3,21 +3,21 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import { LoginWrapper, LoginBox, Input, Button } from './style'
-import { actionCreators } from '../../store/reducers/login'
+import { actions } from './store'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   login(username, password) {
-    dispatch(actionCreators.login(username, password))
+    dispatch(actions.login(username, password))
   }
 })
 
 @connect(
-  mapState,
-  mapDispatch
+  mapStateToProps,
+  mapDispatchToProps
 )
 class Login extends Component {
   render() {
@@ -32,10 +32,12 @@ class Login extends Component {
             <LoginBox>
               <Input
                 placeholder="账户"
+                value="hale"
                 ref={input => (this.username = input)}
               />
               <Input
                 placeholder="密码"
+                value="123456"
                 ref={input => (this.password = input)}
                 type="password"
               />

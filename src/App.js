@@ -3,11 +3,11 @@ import { Provider } from 'react-redux'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import store from './store'
-import Header from './common/header'
-import Home from './views/Home'
-import Detail from './views/Detail/loadable'
-import Login from './views/Login'
-import Write from './views/Write'
+import Header from './components/header'
+import Home from './views/home'
+import Detail from './views/detail/loadable'
+import Login from './views/login'
+import Write from './views/write'
 
 class App extends Component {
   render() {

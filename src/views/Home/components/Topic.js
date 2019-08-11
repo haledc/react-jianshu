@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 
 import { TopicWrapper, TopicItem } from '../style'
 
-const mapState = state => ({
+const mapStateToProps = state => ({
   topicList: state.getIn(['home', 'topicList'])
 })
 
-@connect(mapState)
+@connect(mapStateToProps)
 class Topic extends PureComponent {
   render() {
     const { topicList } = this.props
