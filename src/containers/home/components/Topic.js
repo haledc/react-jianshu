@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { TopicWrapper, TopicItem } from '../style'
 
@@ -25,5 +26,9 @@ const Topic = memo(({ topicList }) => {
     </TopicWrapper>
   )
 })
+
+Topic.propTypes = {
+  topicList: PropTypes.object.isRequired
+}
 
 export default connect(mapStateToProps)(Topic)

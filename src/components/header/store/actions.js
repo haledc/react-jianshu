@@ -1,41 +1,35 @@
 import { fromJS } from 'immutable'
-import * as types from './types'
-import axios from 'axios'
 
-const changeList = data => ({
-  type: types.CHANGE_LIST,
+export const SEARCH_FOCUS = 'header/SEARCH_FOCUS'
+export const SEARCH_BLUR = 'header/SEARCH_BLUR'
+export const CHANGE_LIST = 'header/CHANGE_LIST'
+export const MOUSE_ENTER = 'header/MOUSE_ENTER'
+export const MOUSE_LEAVE = 'header/MOUSE_LEAVE'
+export const CHANGE_PAGE = 'header/CHANGE_PAGE'
+
+export const changeList = data => ({
+  type: CHANGE_LIST,
   data: fromJS(data),
   totalPage: Math.ceil(data.length / 10)
 })
 
 export const searchFocus = () => ({
-  type: types.SEARCH_FOCUS
+  type: SEARCH_FOCUS
 })
 
 export const searchBlur = () => ({
-  type: types.SEARCH_BLUR
+  type: SEARCH_BLUR
 })
 
 export const mouseEnter = () => ({
-  type: types.MOUSE_ENTER
+  type: MOUSE_ENTER
 })
 
 export const mouseLeave = () => ({
-  type: types.MOUSE_LEAVE
+  type: MOUSE_LEAVE
 })
 
 export const changePage = page => ({
-  type: types.CHANGE_PAGE,
+  type: CHANGE_PAGE,
   page
 })
-
-export const getList = () => dispatch => {
-  axios
-    .get('/api/headerList.json')
-    .then(res => {
-      if (res.data.success === true) {
-        dispatch(changeList(res.data.data))
-      }
-    })
-    .catch(e => console.log(e))
-}

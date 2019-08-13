@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import {
   HeaderWrapper,
@@ -17,8 +18,14 @@ import {
   Button
 } from './style'
 import { CSSTransition } from 'react-transition-group'
-import { actions } from './store'
-import { actions as loginActions } from '../../views/login/store'
+import {
+  searchFocus,
+  searchBlur,
+  mouseEnter,
+  mouseLeave,
+  changePage
+} from './store/actions'
+import { changeLoginStatus } from '../../containers/login/store/actions'
 
 const mapStateToProps = state => ({
   // focused: state.get('header').get('focused')
@@ -30,54 +37,19 @@ const mapStateToProps = state => ({
   isLogin: state.getIn(['login', 'isLogin'])
 })
 
-const mapDispatchToProps = dispatch => ({
-  handleInputFocus(list) {
-    list.size === 0 && dispatch(actions.getList())
-    dispatch(actions.searchFocus())
-  },
-  handleInputBlur() {
-    dispatch(actions.searchBlur())
-  },
-  handleMouseEnter() {
-    dispatch(actions.mouseEnter())
-  },
-  handleMouseLeave() {
-    dispatch(actions.mouseLeave())
-  },
-  handleChangePage(page, totalPage, iconDom) {
-    let originAngle =
-      iconDom.style.transform && iconDom.style.transform.replace(/[^0-9]/gi, '')
-    if (originAngle) {
-      originAngle = parseInt(originAngle, 10)
-    } else {
-      originAngle = 0
-    }
-
-    iconDom.style.transform = `rotate(${originAngle + 360}deg)`
-    if (page < totalPage) {
-      dispatch(actions.changePage(page + 1))
-    } else {
-      dispatch(actions.changePage(1))
-    }
-  },
-  logout() {
-    dispatch(loginActions.changeLoginStatus(false))
-  }
-})
-
 const Header = ({
   focused,
+  mouseIn,
   list,
   page,
   isLogin,
   totalPage,
-  mouseIn,
-  handleInputFocus,
-  handleInputBlur,
-  handleMouseEnter,
-  handleMouseLeave,
-  handleChangePage,
-  logout
+  searchFocus,
+  searchBlur,
+  mouseEnter,
+  mouseLeave,
+  changePage,
+  changeLoginStatus
 }) => {
   let spinIcon
   const newList = list.toJS()
@@ -93,6 +65,23 @@ const Header = ({
     }
   }
 
+  const handleChangePage = (page, totalPage, iconDom) => {
+    let originAngle =
+      iconDom.style.transform && iconDom.style.transform.replace(/[^0-9]/gi, '')
+    if (originAngle) {
+      originAngle = parseInt(originAngle, 10)
+    } else {
+      originAngle = 0
+    }
+
+    iconDom.style.transform = `rotate(${originAngle + 360}deg)`
+    if (page < totalPage) {
+      changePage(page + 1)
+    } else {
+      changePage(1)
+    }
+  }
+
   return (
     <div>
       <HeaderWrapper>
@@ -100,10 +89,12 @@ const Header = ({
           <Logo />
         </Link>
         <Nav>
-          <NavItem className="left active">首页</NavItem>
+          <Link to="/">
+            <NavItem className="left active">首页</NavItem>
+          </Link>
           <NavItem className="left">下载App</NavItem>
           {isLogin ? (
-            <NavItem className="right" onClick={logout}>
+            <NavItem className="right" onClick={() => changeLoginStatus(false)}>
               退出
             </NavItem>
           ) : (
@@ -118,8 +109,8 @@ const Header = ({
             <CSSTransition in={focused} timeout={500} classNames="slide">
               <NavSearch
                 className={focused ? 'focused' : ''}
-                onFocus={() => handleInputFocus(list)}
-                onBlur={handleInputBlur}
+                onFocus={() => searchFocus(list)}
+                onBlur={() => searchBlur()}
               />
             </CSSTransition>
             <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>
@@ -127,8 +118,8 @@ const Header = ({
             </i>
             {(focused || mouseIn) && (
               <SearchInfo
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => mouseEnter()}
+                onMouseLeave={() => mouseLeave()}
               >
                 <SearchInfoTitle>
                   热门搜索
@@ -160,7 +151,29 @@ const Header = ({
   )
 }
 
+Header.propTypes = {
+  focused: PropTypes.bool.isRequired,
+  mouseIn: PropTypes.bool.isRequired,
+  list: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
+  isLogin: PropTypes.bool.isRequired,
+  totalPage: PropTypes.number.isRequired,
+  searchFocus: PropTypes.func.isRequired,
+  searchBlur: PropTypes.func.isRequired,
+  mouseEnter: PropTypes.func.isRequired,
+  mouseLeave: PropTypes.func.isRequired,
+  changePage: PropTypes.func.isRequired,
+  changeLoginStatus: PropTypes.func.isRequired
+}
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    searchFocus,
+    searchBlur,
+    mouseEnter,
+    mouseLeave,
+    changePage,
+    changeLoginStatus
+  }
 )(Header)

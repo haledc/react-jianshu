@@ -1,22 +1,17 @@
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { ListItem, ListInfo, LoadMore } from '../style'
-import { actions } from '../store'
+import { requestMoreArticleList } from '../store/actions'
 
 const mapStateToProps = state => ({
   articleList: state.getIn(['home', 'articleList']),
   articlePage: state.getIn(['home', 'articlePage'])
 })
 
-const mapDispatchToProps = dispatch => ({
-  getMoreList(page) {
-    dispatch(actions.getMoreList(page))
-  }
-})
-
-const List = memo(({ articleList, articlePage, getMoreList }) => {
+const List = memo(({ articleList, articlePage, requestMoreArticleList }) => {
   return (
     <div>
       {articleList.map((item, index) => (
@@ -30,12 +25,20 @@ const List = memo(({ articleList, articlePage, getMoreList }) => {
           </ListItem>
         </Link>
       ))}
-      <LoadMore onClick={() => getMoreList(articlePage)}>阅读更多</LoadMore>
+      <LoadMore onClick={() => requestMoreArticleList(articlePage + 1)}>
+        阅读更多
+      </LoadMore>
     </div>
   )
 })
 
+List.propTypes = {
+  articleList: PropTypes.object.isRequired,
+  articlePage: PropTypes.number.isRequired,
+  requestMoreArticleList: PropTypes.func.isRequired
+}
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { requestMoreArticleList }
 )(List)

@@ -1,24 +1,19 @@
 import React, { useEffect, memo } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { DetailWrapper, Header, Content } from './style'
-import { actions } from './store'
+import { requestDetail } from './store/actions'
 
 const mapStateToProps = state => ({
   title: state.getIn(['detail', 'title']),
   content: state.getIn(['detail', 'content'])
 })
 
-const mapDispatchToProps = dispatch => ({
-  getDetail(id) {
-    dispatch(actions.getDetail(id))
-  }
-})
-
-const Detail = memo(({ title, content, getDetail, match }) => {
+const Detail = memo(({ title, content, requestDetail, match }) => {
   useEffect(() => {
-    getDetail(match.params.id)
+    requestDetail(match.params.id)
   })
 
   return (
@@ -29,9 +24,16 @@ const Detail = memo(({ title, content, getDetail, match }) => {
   )
 })
 
+Detail.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  requestDetail: PropTypes.func.isRequired,
+  match: PropTypes.object
+}
+
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { requestDetail }
   )(Detail)
 )

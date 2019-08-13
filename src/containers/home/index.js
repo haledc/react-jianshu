@@ -1,39 +1,20 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Topic from './components/Topic'
 import List from './components/List'
 import Recommend from './components/Recommend'
 import Writer from './components/Writer'
 import { HomeWrapper, HomeLeft, HomeRight } from './style'
-import { actions } from './store'
+import { toggleScrollShow } from './store/actions'
 import { BackUp } from './style'
 
 const mapStateToProps = state => ({
-  showScroll: state.getIn(['home', 'showScroll']),
-  articleList: state.getIn(['home', 'articleList'])
+  showScroll: state.getIn(['home', 'showScroll'])
 })
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getHomeInfo() {
-      return dispatch(actions.getHomeInfo())
-    },
-    changeScrollShow() {
-      if (document.documentElement.scrollTop > 300) {
-        dispatch(actions.toggleScrollShow(true))
-      } else {
-        dispatch(actions.toggleScrollShow(false))
-      }
-    }
-  }
-}
-
-const Home = ({ showScroll, articleList, getHomeInfo, changeScrollShow }) => {
-  useEffect(() => {
-    getHomeInfo()
-  }, [articleList.length])
-
+const Home = ({ showScroll, toggleScrollShow }) => {
   useEffect(() => {
     bindScrollEvent()
     return () => {
@@ -41,11 +22,19 @@ const Home = ({ showScroll, articleList, getHomeInfo, changeScrollShow }) => {
     }
   })
 
-  function handleScrollTop() {
+  const changeScrollShow = () => {
+    if (document.documentElement.scrollTop > 300) {
+      toggleScrollShow(true)
+    } else {
+      toggleScrollShow(false)
+    }
+  }
+
+  const handleScrollTop = () => {
     window.scrollTo(0, 0)
   }
 
-  function bindScrollEvent() {
+  const bindScrollEvent = () => {
     window.addEventListener('scroll', changeScrollShow)
   }
 
@@ -69,7 +58,12 @@ const Home = ({ showScroll, articleList, getHomeInfo, changeScrollShow }) => {
   )
 }
 
+Home.prototype = {
+  showScroll: PropTypes.bool.isRequired,
+  toggleScrollShow: PropTypes.func.isRequired
+}
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { toggleScrollShow }
 )(Home)

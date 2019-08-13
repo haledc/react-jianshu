@@ -1,17 +1,20 @@
 import { fromJS } from 'immutable'
-import * as types from './types'
+import { REQUEST_DETAIL, RECEIVE_DETAIL } from './actions'
 
 const defaultState = fromJS({
+  id: 0,
   title: '',
   content: ''
 })
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.CHANGE_DETAIL_INFO:
+    case REQUEST_DETAIL:
+      return state.set('id', action.id)
+    case RECEIVE_DETAIL:
       return state.merge({
-        title: action.title,
-        content: action.content
+        title: action.data.title,
+        content: action.data.content
       })
     default:
       return state

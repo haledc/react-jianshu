@@ -1,5 +1,12 @@
 import { fromJS } from 'immutable'
-import * as types from './types'
+import {
+  SEARCH_FOCUS,
+  SEARCH_BLUR,
+  CHANGE_LIST,
+  MOUSE_ENTER,
+  MOUSE_LEAVE,
+  CHANGE_PAGE
+} from './actions'
 
 const defaultState = fromJS({
   focused: false,
@@ -11,21 +18,21 @@ const defaultState = fromJS({
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case types.SEARCH_FOCUS:
+    case SEARCH_FOCUS:
       return state.set('focused', true)
-    case types.SEARCH_BLUR:
+    case SEARCH_BLUR:
       return state.set('focused', false)
-    case types.CHANGE_LIST:
+    case CHANGE_LIST:
       // return state.set('list', action.data).set('totalPage', action.totalPage)
       return state.merge({
         list: action.data,
         totalPage: action.totalPage
       })
-    case types.MOUSE_ENTER:
+    case MOUSE_ENTER:
       return state.set('mouseIn', true)
-    case types.MOUSE_LEAVE:
+    case MOUSE_LEAVE:
       return state.set('mouseIn', false)
-    case types.CHANGE_PAGE:
+    case CHANGE_PAGE:
       return state.set('page', action.page)
     default:
       return state

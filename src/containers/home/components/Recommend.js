@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { RecommendWrapper, RecommendItem } from '../style'
 
@@ -16,5 +17,9 @@ const Recommend = memo(({ recommendList }) => {
     </RecommendWrapper>
   )
 })
+
+Recommend.propTypes = {
+  recommendList: PropTypes.object.isRequired
+}
 
 export default connect(mapStateToProps)(Recommend)
