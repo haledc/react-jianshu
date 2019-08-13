@@ -20,9 +20,16 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps
 )
 class Login extends Component {
+  constructor(props) {
+    super()
+    this.state = {
+      username: 'Hale',
+      password: '123456'
+    }
+  }
+
   render() {
     const { isLogin } = this.props
-    console.log(isLogin)
     return (
       <Fragment>
         {isLogin ? (
@@ -32,14 +39,20 @@ class Login extends Component {
             <LoginBox>
               <Input
                 placeholder="账户"
-                value="hale"
+                value={this.state.username}
                 ref={input => (this.username = input)}
+                onChange={event =>
+                  this.setState({ username: event.target.value })
+                }
               />
               <Input
                 placeholder="密码"
-                value="123456"
+                value={this.state.password}
                 ref={input => (this.password = input)}
                 type="password"
+                onChange={event =>
+                  this.setState({ password: event.target.value })
+                }
               />
               <Button
                 onClick={() =>

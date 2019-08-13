@@ -37,5 +37,5 @@ export const getList = () => dispatch => {
         dispatch(changeList(res.data.data))
       }
     })
-    .catch(e => console.log(e))
+    .catch(error => console.log(error))
 }

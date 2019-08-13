@@ -4,10 +4,10 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import store from './store'
 import Header from './components/header'
-import Home from './views/home'
-import Detail from './views/detail/loadable'
-import Login from './views/login'
-import Write from './views/write'
+import Home from './containers/home'
+import Detail from './containers/detail/loadable'
+import Login from './containers/login'
+import Write from './containers/write'
 
 class App extends Component {
   render() {

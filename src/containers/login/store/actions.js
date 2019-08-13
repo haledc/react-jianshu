@@ -16,5 +16,5 @@ export const login = (username, password) => dispatch => {
         alert('登录失败')
       }
     })
-    .catch(e => console.log(e))
+    .catch(error => console.log(error))
 }
