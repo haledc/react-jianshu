@@ -18,7 +18,7 @@ import {
 } from './style'
 import { CSSTransition } from 'react-transition-group'
 import { actions } from './store'
-import { actions as loginActions } from '../../views/login/store'
+import { actions as loginActions } from '../../containers/login/store'
 
 const mapStateToProps = state => ({
   // focused: state.get('header').get('focused')
@@ -100,7 +100,9 @@ const Header = ({
           <Logo />
         </Link>
         <Nav>
-          <NavItem className="left active">首页</NavItem>
+          <Link to="/">
+            <NavItem className="left active">首页</NavItem>
+          </Link>
           <NavItem className="left">下载App</NavItem>
           {isLogin ? (
             <NavItem className="right" onClick={logout}>
