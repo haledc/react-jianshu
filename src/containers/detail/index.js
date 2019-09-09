@@ -11,15 +11,15 @@ const mapStateToProps = state => ({
   content: state.getIn(['detail', 'content'])
 })
 
-const Detail = memo(({ title, content, requestDetail, match }) => {
+const Detail = memo(props => {
   useEffect(() => {
-    requestDetail(match.params.id)
-  })
+    props.requestDetail(props.match.params.id)
+  }, [props])
 
   return (
     <DetailWrapper>
-      <Header>{title}</Header>
-      <Content dangerouslySetInnerHTML={{ __html: content }} />
+      <Header>{props.title}</Header>
+      <Content dangerouslySetInnerHTML={{ __html: props.content }} />
     </DetailWrapper>
   )
 })

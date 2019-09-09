@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 const Home = ({ showScroll, toggleScrollShow }) => {
   useEffect(() => {
-    bindScrollEvent()
+    window.addEventListener('scroll', changeScrollShow)
     return () => {
       window.removeEventListener('scroll', changeScrollShow)
     }
@@ -32,10 +32,6 @@ const Home = ({ showScroll, toggleScrollShow }) => {
 
   const handleScrollTop = () => {
     window.scrollTo(0, 0)
-  }
-
-  const bindScrollEvent = () => {
-    window.addEventListener('scroll', changeScrollShow)
   }
 
   return (
