@@ -1,6 +1,6 @@
 # react-jianshu
 
-> A React.js Project
+> 使用 React 实现简书首页
 
 ### 技术栈
 
@@ -24,8 +24,8 @@ node prod.server.js
 
 ### 分支版本信息
 
-- [hook + redux-saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
+- [Hook + Redux + Saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
 
-- [hook + redux-thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
+- [Hook + Redux + Thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
 
-- [class + redux-thunk 版本](https://github.com/haledc/react-jianshu/tree/class-redux)
+- [Class + Redux + Thunk 版本](https://github.com/haledc/react-jianshu/tree/class-redux)
