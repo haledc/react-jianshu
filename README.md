@@ -24,8 +24,10 @@ node prod.server.js
 
 ### 分支版本信息
 
-- [hook + redux-saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
+- [Hook + Redux-Saga + Typescript 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga-ts)
 
-- [hook + redux-thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
+- [Hook + Redux-Saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
 
-- [class + redux-thunk 版本](https://github.com/haledc/react-jianshu/tree/class-redux)
+- [Hook + Redux-Thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
+
+- [Class + Redux-Thunk 版本](https://github.com/haledc/react-jianshu/tree/class-redux)
