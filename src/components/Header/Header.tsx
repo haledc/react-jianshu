@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {
@@ -17,55 +17,26 @@ import {
   Button
 } from './StyleComponents'
 import { CSSTransition } from 'react-transition-group'
-import {
-  searchFocus,
-  searchBlur,
-  mouseEnter,
-  mouseLeave,
-  changePage
-} from './store/actions'
 import { RootState } from '../../store'
-// @ts-ignore
-import { changeLoginStatus } from '../../containers/Login/store/actions'
+import {
+  SEARCH_FOCUS,
+  SEARCH_BLUR,
+  MOUSE_ENTER,
+  MOUSE_LEAVE,
+  CHANGE_PAGE
+} from './store'
+import { CHANGE_LOGIN_STATUS } from '../../containers/Login/store/types'
 
-const mapStateToProps = (state: RootState) => ({
-  focused: state.header.focused,
-  mouseIn: state.header.mouseIn,
-  list: state.header.list,
-  page: state.header.page,
-  totalPage: state.header.totalPage,
-  isLogin: state.login.isLogin
-})
+const Header: React.FC = () => {
+  const focused = useSelector((state: RootState) => state.header.focused)
+  const mouseIn = useSelector((state: RootState) => state.header.mouseIn)
+  const list = useSelector((state: RootState) => state.header.list)
+  const page = useSelector((state: RootState) => state.header.page)
+  const totalPage = useSelector((state: RootState) => state.header.totalPage)
+  const isLogin = useSelector((state: RootState) => state.login.isLogin)
 
-interface HeaderProps {
-  focused: boolean
-  mouseIn: boolean
-  list: string[]
-  page: number
-  isLogin: boolean
-  totalPage: number
-  searchFocus: typeof searchFocus
-  searchBlur: typeof searchBlur
-  mouseEnter: typeof mouseEnter
-  mouseLeave: typeof mouseLeave
-  changePage: typeof changePage
-  changeLoginStatus: typeof changeLoginStatus
-}
+  const dispatch = useDispatch()
 
-const Header: React.FC<HeaderProps> = ({
-  focused,
-  mouseIn,
-  list,
-  page,
-  isLogin,
-  totalPage,
-  searchFocus,
-  searchBlur,
-  mouseEnter,
-  mouseLeave,
-  changePage,
-  changeLoginStatus
-}) => {
   let spinIcon: HTMLElement
   const newList = list
   const pageList = []
@@ -91,9 +62,9 @@ const Header: React.FC<HeaderProps> = ({
 
     iconDom.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
     if (page < totalPage) {
-      changePage(page + 1)
+      dispatch({ type: CHANGE_PAGE, payload: { page: page + 1 } })
     } else {
-      changePage(1)
+      dispatch({ type: CHANGE_PAGE, payload: { page: 1 } })
     }
   }
 
@@ -109,7 +80,15 @@ const Header: React.FC<HeaderProps> = ({
           </Link>
           <NavItem className="left">下载App</NavItem>
           {isLogin ? (
-            <NavItem className="right" onClick={() => changeLoginStatus(false)}>
+            <NavItem
+              className="right"
+              onClick={() =>
+                dispatch({
+                  type: CHANGE_LOGIN_STATUS,
+                  payload: { isLogin: false }
+                })
+              }
+            >
               退出
             </NavItem>
           ) : (
@@ -124,8 +103,8 @@ const Header: React.FC<HeaderProps> = ({
             <CSSTransition in={focused} timeout={500} classNames="slide">
               <NavSearch
                 className={focused ? 'focused' : ''}
-                onFocus={() => searchFocus()}
-                onBlur={() => searchBlur()}
+                onFocus={() => dispatch({ type: SEARCH_FOCUS })}
+                onBlur={() => dispatch({ type: SEARCH_BLUR })}
               />
             </CSSTransition>
             <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>
@@ -133,8 +112,8 @@ const Header: React.FC<HeaderProps> = ({
             </i>
             {(focused || mouseIn) && (
               <SearchInfo
-                onMouseEnter={() => mouseEnter()}
-                onMouseLeave={() => mouseLeave()}
+                onMouseEnter={() => dispatch({ type: MOUSE_ENTER })}
+                onMouseLeave={() => dispatch({ type: MOUSE_LEAVE })}
               >
                 <SearchInfoTitle>
                   热门搜索
@@ -166,11 +145,4 @@ const Header: React.FC<HeaderProps> = ({
   )
 }
 
-export default connect(mapStateToProps, {
-  searchFocus,
-  searchBlur,
-  mouseEnter,
-  mouseLeave,
-  changePage,
-  changeLoginStatus
-})(Header)
+export default Header

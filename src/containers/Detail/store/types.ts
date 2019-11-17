@@ -10,7 +10,7 @@ export const RECEIVE_DETAIL = 'detail/RECEIVE_DETAIL'
 export interface RequestDetailAction {
   type: typeof REQUEST_DETAIL
   payload: {
-    id: number
+    id: string
   }
 }
 

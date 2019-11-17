@@ -1,7 +1,6 @@
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 import * as request from '../../../request'
-import { changeLoginStatus } from './actions'
-import { User, REQUEST_LOGIN } from './types'
+import { User, REQUEST_LOGIN, CHANGE_LOGIN_STATUS } from './types'
 
 function* fetchLogin(user: User) {
   const username = yield select(state => state.login.user.username)
@@ -11,13 +10,16 @@ function* fetchLogin(user: User) {
     password
   })
   if (response) {
-    yield put(changeLoginStatus(true))
+    yield put({
+      type: CHANGE_LOGIN_STATUS,
+      payload: { isLogin: true }
+    })
   } else {
     console.log(error)
   }
 }
 
-export default function* () {
+export default function*() {
   // @ts-ignore
   yield takeEvery(REQUEST_LOGIN, fetchLogin)
 }

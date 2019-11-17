@@ -1,21 +1,15 @@
 import React, { createRef, useState } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import { LoginWrapper, LoginBox, Input, Button } from './StyleComponents'
-import { requestLogin } from './store/actions'
+import { REQUEST_LOGIN } from './store'
 import { RootState } from '../../store'
 
-const mapStateToProps = (state: RootState) => ({
-  isLogin: state.login.isLogin
-})
+const Login: React.FC = () => {
+  const isLogin = useSelector((state: RootState) => state.login.isLogin)
+  const dispatch = useDispatch()
 
-interface LoginProps {
-  isLogin: boolean
-  requestLogin: typeof requestLogin
-}
-
-const Login: React.FC<LoginProps> = ({ isLogin, requestLogin }) => {
   const usernameInput = createRef<HTMLInputElement>()
   const passwordInput = createRef<HTMLInputElement>()
 
@@ -44,9 +38,14 @@ const Login: React.FC<LoginProps> = ({ isLogin, requestLogin }) => {
             />
             <Button
               onClick={() =>
-                requestLogin({
-                  username: usernameInput.current!.value,
-                  password: passwordInput.current!.value
+                dispatch({
+                  type: REQUEST_LOGIN,
+                  payload: {
+                    user: {
+                      username: usernameInput.current!.value,
+                      password: passwordInput.current!.value
+                    }
+                  }
                 })
               }
             >
@@ -59,7 +58,4 @@ const Login: React.FC<LoginProps> = ({ isLogin, requestLogin }) => {
   )
 }
 
-export default connect(
-  mapStateToProps,
-  { requestLogin }
-)(Login)
+export default Login

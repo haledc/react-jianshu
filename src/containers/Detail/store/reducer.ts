@@ -14,7 +14,7 @@ const defaultState: DetailState = {
 export default (state = defaultState, action: DetailActionTypes) => {
   switch (action.type) {
     case REQUEST_DETAIL:
-      return { ...state, id: action.payload.id }
+      return { ...state, id: Number(action.payload.id) }
     case RECEIVE_DETAIL:
       const { title, content } = action.payload
       return { ...state, title, content }

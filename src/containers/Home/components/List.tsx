@@ -1,24 +1,17 @@
 import React, { memo } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { ListItem, ListInfo, LoadMore } from '../StyleComponents'
-import { requestMoreArticleList } from '../store/actions'
 import { RootState } from '../../../store'
-import { Article } from '../store/types'
+import { REQUEST_MORE_ARTICLE_LIST } from '../store'
 
-const mapStateToProps = (state: RootState) => ({
-  articleList: state.home.articleList,
-  articlePage: state.home.articlePage
-})
+const List: React.FC = memo(() => {
+  const articleList = useSelector((state: RootState) => state.home.articleList)
+  const articlePage = useSelector((state: RootState) => state.home.articlePage)
 
-interface ListProps {
-  articleList: Array<Article>
-  articlePage: number
-  requestMoreArticleList: typeof requestMoreArticleList
-}
+  const dispatch = useDispatch()
 
-const List: React.FC<ListProps> = memo(({ articleList, articlePage, requestMoreArticleList }) => {
   return (
     <div>
       {articleList.map((item, index) => (
@@ -32,11 +25,18 @@ const List: React.FC<ListProps> = memo(({ articleList, articlePage, requestMoreA
           </ListItem>
         </Link>
       ))}
-      <LoadMore onClick={() => requestMoreArticleList(articlePage + 1)}>
+      <LoadMore
+        onClick={() =>
+          dispatch({
+            type: REQUEST_MORE_ARTICLE_LIST,
+            payload: { nextPage: articlePage + 1 }
+          })
+        }
+      >
         阅读更多
       </LoadMore>
     </div>
   )
 })
 
-export default connect(mapStateToProps, { requestMoreArticleList })(List)
+export default List

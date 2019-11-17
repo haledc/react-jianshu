@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Topic from './components/Topic'
 import List from './components/List'
 import Recommend from './components/Recommend'
 import Writer from './components/Writer'
-import { HomeWrapper, HomeLeft, HomeRight } from './StyleComponents'
-import { toggleScrollShow } from './store/actions'
-import { BackUp } from './StyleComponents'
+import { HomeWrapper, HomeLeft, HomeRight, BackUp } from './StyleComponents'
 import { RootState } from '../../store'
+import { TOGGLE_SCROLL_SHOW } from './store'
 
-const mapStateToProps = (state: RootState) => ({
-  isShowScroll: state.home.isShowScroll
-})
+const Home: React.FC = () => {
+  const isShowScroll = useSelector(
+    (state: RootState) => state.home.isShowScroll
+  )
+  const dispatch = useDispatch()
 
-interface HomeProps {
-  isShowScroll: boolean
-  toggleScrollShow: typeof toggleScrollShow
-}
-
-const Home: React.FC<HomeProps> = ({ isShowScroll, toggleScrollShow }) => {
   useEffect(() => {
     bindScrollEvent()
     return () => {
@@ -29,9 +24,9 @@ const Home: React.FC<HomeProps> = ({ isShowScroll, toggleScrollShow }) => {
 
   const changeScrollShow = () => {
     if (document.documentElement.scrollTop > 300) {
-      toggleScrollShow(true)
+      dispatch({ type: TOGGLE_SCROLL_SHOW, payload: { isShowScroll: true } })
     } else {
-      toggleScrollShow(false)
+      dispatch({ type: TOGGLE_SCROLL_SHOW, payload: { isShowScroll: false } })
     }
   }
 
@@ -63,7 +58,4 @@ const Home: React.FC<HomeProps> = ({ isShowScroll, toggleScrollShow }) => {
   )
 }
 
-export default connect(
-  mapStateToProps,
-  { toggleScrollShow }
-)(Home)
+export default Home
