@@ -39,4 +39,5 @@ export const Button = styled.div`
   margin: 20px auto;
   border-radius: 15px;
   text-align: center;
+  cursor: pointer;
 `

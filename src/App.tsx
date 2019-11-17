@@ -5,7 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import store from './store'
 import Header from './components/Header'
 import Home from './containers/Home'
-import Detail from './containers/Detail/Loadable'
+import Detail from './containers/Detail'
 import Login from './containers/Login'
 import Write from './containers/Write'
 
