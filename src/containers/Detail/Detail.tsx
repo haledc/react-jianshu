@@ -6,17 +6,6 @@ import { DetailWrapper, Header, Content } from './StyleComponents'
 import { REQUEST_DETAIL } from './store'
 import { RootState } from '../../store'
 
-// const mapStateToProps = (state: RootState) => ({
-//   title: state.detail.title,
-//   content: state.detail.content
-// })
-
-// interface DetailProps {
-//   title: string
-//   content: string
-//   requestDetail: typeof requestDetail
-// }
-
 const Detail: React.FC = memo(() => {
   const { id } = useParams()
   const title = useSelector((state: RootState) => state.detail.title)

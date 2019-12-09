@@ -1,11 +1,11 @@
-import axios from 'axios'
+import axios, { AxiosPromise } from 'axios'
 
 interface User {
   username: string
   password: string
 }
 
-const handleRequest = (request: Promise<any>) =>
+const handleRequest = (request: AxiosPromise<any>) =>
   request
     .then(res => {
       if (res.data.success) {

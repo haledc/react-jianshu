@@ -3,9 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import reducers from './reducers'
 import rootSaga from './sagas'
-// @ts-ignore
 import { HeaderState } from '../components/Header/store/types'
-// @ts-ignore
 import { LoginState } from '../containers/Login/store/types'
 import { HomeState } from '../containers/Home/store/types'
 import { DetailState } from '../containers/Detail/store/types'
