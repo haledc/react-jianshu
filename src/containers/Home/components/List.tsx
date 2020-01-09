@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import { ListItem, ListInfo, LoadMore } from '../StyleComponents'
 import { RootState } from '../../../store'
 import { REQUEST_MORE_ARTICLE_LIST } from '../store'
 
-const List: React.FC = memo(() => {
+const List: React.FC = () => {
   const articleList = useSelector((state: RootState) => state.home.articleList)
   const articlePage = useSelector((state: RootState) => state.home.articlePage)
 
@@ -37,6 +37,6 @@ const List: React.FC = memo(() => {
       </LoadMore>
     </div>
   )
-})
+}
 
 export default List

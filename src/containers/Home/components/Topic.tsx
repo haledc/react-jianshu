@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { TopicWrapper, TopicItem } from '../StyleComponents'
 import { RootState } from '../../../store'
 
-const Topic: React.FC = memo(() => {
+const Topic: React.FC = () => {
   const topicList = useSelector((state: RootState) => state.home.topicList)
 
   return (
@@ -19,6 +19,6 @@ const Topic: React.FC = memo(() => {
       })}
     </TopicWrapper>
   )
-})
+}
 
 export default Topic

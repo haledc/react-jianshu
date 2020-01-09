@@ -1,7 +1,7 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { WriterWrapper } from '../StyleComponents'
 
-const Writer = memo(() => <WriterWrapper>Writer Component</WriterWrapper>)
+const Writer = () => <WriterWrapper>Writer Component</WriterWrapper>
 
 export default Writer
