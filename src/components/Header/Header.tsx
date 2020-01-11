@@ -1,6 +1,7 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
+import { getList } from '../../request'
 
 import {
   HeaderWrapper,
@@ -17,29 +18,36 @@ import {
   Button
 } from './StyleComponents'
 import { CSSTransition } from 'react-transition-group'
-import { RootState } from '../../store'
-import {
-  SEARCH_FOCUS,
-  SEARCH_BLUR,
-  MOUSE_ENTER,
-  MOUSE_LEAVE,
-  CHANGE_PAGE
-} from './store'
-import { CHANGE_LOGIN_STATUS } from '../../containers/Login/store/types'
+import { useStore } from '../../hooks'
 
-const Header: React.FC = () => {
-  const focused = useSelector((state: RootState) => state.header.focused)
-  const mouseIn = useSelector((state: RootState) => state.header.mouseIn)
-  const list = useSelector((state: RootState) => state.header.list)
-  const page = useSelector((state: RootState) => state.header.page)
-  const totalPage = useSelector((state: RootState) => state.header.totalPage)
-  const isLogin = useSelector((state: RootState) => state.login.isLogin)
+const Header = observer(() => {
+  const { headerStore, loginStore } = useStore()
+  const {
+    focused,
+    mouseIn,
+    list,
+    page,
+    totalPage,
+    setPage,
+    setFocused,
+    setMouseIn,
+    setList,
+    setTotalPage
+  } = headerStore
 
-  const dispatch = useDispatch()
-
+  const { isLogin, setLoginStatus } = loginStore
   let spinIcon: HTMLElement
-  const newList = list
+  const newList = list.slice()
   const pageList = []
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const list = await getList()
+      setList(list)
+      setTotalPage(Math.ceil(list.length / 10))
+    }
+    fetchData()
+  })
 
   if (newList && newList.length) {
     for (let i = (page - 1) * 10; i < page * 10; i++) {
@@ -54,17 +62,17 @@ const Header: React.FC = () => {
   const handleChangePage = (
     page: number,
     totalPage: number,
-    iconDom: HTMLElement
+    iconRef: HTMLElement
   ) => {
     let originAngle: string =
-      iconDom.style.transform && iconDom.style.transform.replace(/[^0-9]/gi, '')
-    originAngle = originAngle || '0'
+      iconRef?.style?.transform?.replace(/[^0-9]/gi, '') || '0'
 
-    iconDom.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
+    iconRef.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
+
     if (page < totalPage) {
-      dispatch({ type: CHANGE_PAGE, payload: { page: page + 1 } })
+      setPage(page + 1)
     } else {
-      dispatch({ type: CHANGE_PAGE, payload: { page: 1 } })
+      setPage(1)
     }
   }
 
@@ -80,15 +88,7 @@ const Header: React.FC = () => {
           </Link>
           <NavItem className="left">下载App</NavItem>
           {isLogin ? (
-            <NavItem
-              className="right"
-              onClick={() =>
-                dispatch({
-                  type: CHANGE_LOGIN_STATUS,
-                  payload: { isLogin: false }
-                })
-              }
-            >
+            <NavItem className="right" onClick={() => setLoginStatus(false)}>
               退出
             </NavItem>
           ) : (
@@ -103,8 +103,8 @@ const Header: React.FC = () => {
             <CSSTransition in={focused} timeout={500} classNames="slide">
               <NavSearch
                 className={focused ? 'focused' : ''}
-                onFocus={() => dispatch({ type: SEARCH_FOCUS })}
-                onBlur={() => dispatch({ type: SEARCH_BLUR })}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
               />
             </CSSTransition>
             <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>
@@ -112,8 +112,8 @@ const Header: React.FC = () => {
             </i>
             {(focused || mouseIn) && (
               <SearchInfo
-                onMouseEnter={() => dispatch({ type: MOUSE_ENTER })}
-                onMouseLeave={() => dispatch({ type: MOUSE_LEAVE })}
+                onMouseEnter={() => setMouseIn(true)}
+                onMouseLeave={() => setMouseIn(false)}
               >
                 <SearchInfoTitle>
                   热门搜索
@@ -143,6 +143,6 @@ const Header: React.FC = () => {
       </HeaderWrapper>
     </div>
   )
-}
+})
 
 export default Header

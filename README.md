@@ -4,7 +4,7 @@
 
 ### 技术栈
 
-React 全家桶
+**React + React-Router + Redux(MobX) + TypeScript**
 
 ### 构建
 
@@ -24,10 +24,12 @@ node prod.server.js
 
 ### 分支版本信息
 
-- [Hook + Redux(Hook) + Saga + Typescript 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga-ts)
+- [Hooks + MobX + TS 版本](https://github.com/haledc/react-jianshu/tree/hook-mobx-ts)
 
-- [Hook + Redux + Saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
+- [Hooks + Redux + Saga + TS 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga-ts)
 
-- [Hook + Redux + Thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
+- [Hooks + Redux + Saga 版本](https://github.com/haledc/react-jianshu/tree/hook-redux-saga)
+
+- [Hooks + Redux + Thunk 版本](https://github.com/haledc/react-jianshu/tree/hook-redux)
 
 - [Class + Redux + Thunk 版本](https://github.com/haledc/react-jianshu/tree/class-redux)

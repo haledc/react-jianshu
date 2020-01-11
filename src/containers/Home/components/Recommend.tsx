@@ -1,20 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-
+import { observer } from 'mobx-react'
 import { RecommendWrapper, RecommendItem } from '../StyleComponents'
-import { RootState } from '../../../store'
+import { useStore } from '../../../hooks'
 
-const Recommend: React.FC = () => {
-  const recommendList = useSelector(
-    (state: RootState) => state.home.recommendList
-  )
+const Recommend = observer(() => {
+  const { homeStore } = useStore()
+  const { recommendList } = homeStore
+
   return (
     <RecommendWrapper>
-      {recommendList.map(item => (
+      {recommendList.map((item: any) => (
         <RecommendItem key={item.id} imgUrl={item.imgUrl} />
       ))}
     </RecommendWrapper>
   )
-}
+})
 
 export default Recommend

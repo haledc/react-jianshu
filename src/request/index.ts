@@ -6,14 +6,7 @@ interface User {
 }
 
 const handleRequest = (request: AxiosPromise<any>) =>
-  request
-    .then(res => {
-      if (res.data.success) {
-        const response = res.data.data
-        return { response }
-      }
-    })
-    .catch(error => ({ error }))
+  request.then(res => res.data.data)
 
 export const getList = () => handleRequest(axios.get('/api/headerList.json'))
 

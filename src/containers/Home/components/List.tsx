@@ -1,20 +1,23 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
-
 import { ListItem, ListInfo, LoadMore } from '../StyleComponents'
-import { RootState } from '../../../store'
-import { REQUEST_MORE_ARTICLE_LIST } from '../store'
+import { getMoreList } from '../../../request'
+import { useStore } from '../../../hooks'
 
-const List: React.FC = () => {
-  const articleList = useSelector((state: RootState) => state.home.articleList)
-  const articlePage = useSelector((state: RootState) => state.home.articlePage)
+const List = observer(() => {
+  const { homeStore } = useStore()
+  const { articleList, articlePage, setArticlePage, setArticleList } = homeStore
 
-  const dispatch = useDispatch()
+  const fetchMoreArticleList = async () => {
+    const list = await getMoreList(articlePage)
+    setArticleList(list, true)
+    setArticlePage(articlePage + 1)
+  }
 
   return (
     <div>
-      {articleList.map((item, index) => (
+      {articleList.map((item: any, index: number) => (
         <Link key={index} to={'/detail/' + item.id}>
           <ListItem>
             <img className="pic" src={item.imgUrl} alt="pic" />
@@ -25,18 +28,9 @@ const List: React.FC = () => {
           </ListItem>
         </Link>
       ))}
-      <LoadMore
-        onClick={() =>
-          dispatch({
-            type: REQUEST_MORE_ARTICLE_LIST,
-            payload: { nextPage: articlePage + 1 }
-          })
-        }
-      >
-        阅读更多
-      </LoadMore>
+      <LoadMore onClick={fetchMoreArticleList}>阅读更多</LoadMore>
     </div>
   )
-}
+})
 
 export default List

@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { observer } from 'mobx-react'
 
 import Topic from './components/Topic'
 import List from './components/List'
 import Recommend from './components/Recommend'
 import Writer from './components/Writer'
 import { HomeWrapper, HomeLeft, HomeRight, BackUp } from './StyleComponents'
-import { RootState } from '../../store'
-import { TOGGLE_SCROLL_SHOW } from './store'
+import { getHomeInfo } from '../../request'
+import { useStore } from '../../hooks'
 
-const Home: React.FC = () => {
-  const isShowScroll = useSelector(
-    (state: RootState) => state.home.isShowScroll
-  )
-  const dispatch = useDispatch()
+const Home = observer(() => {
+  const { homeStore } = useStore()
+  const { isShowScroll, setScrollShow, setHomeInfo } = homeStore
 
   useEffect(() => {
     window.addEventListener('scroll', changeScrollShow)
@@ -22,11 +20,20 @@ const Home: React.FC = () => {
     }
   })
 
+  const fetchData = async () => {
+    const info = await getHomeInfo()
+    setHomeInfo(info)
+  }
+
+  useEffect(() => {
+    fetchData()
+  })
+
   const changeScrollShow = () => {
     if (document.documentElement.scrollTop > 300) {
-      dispatch({ type: TOGGLE_SCROLL_SHOW, payload: { isShowScroll: true } })
+      setScrollShow(true)
     } else {
-      dispatch({ type: TOGGLE_SCROLL_SHOW, payload: { isShowScroll: false } })
+      setScrollShow(false)
     }
   }
 
@@ -52,6 +59,6 @@ const Home: React.FC = () => {
       {isShowScroll && <BackUp onClick={handleScrollTop}>回到顶部</BackUp>}
     </HomeWrapper>
   )
-}
+})
 
 export default Home

@@ -1,20 +1,24 @@
 import React, { createRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { observer } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
-
 import { LoginWrapper, LoginBox, Input, Button } from './StyleComponents'
-import { REQUEST_LOGIN } from './store'
-import { RootState } from '../../store'
+import { login } from '../../request'
+import { useStore } from '../../hooks'
 
-const Login: React.FC = () => {
-  const isLogin = useSelector((state: RootState) => state.login.isLogin)
-  const dispatch = useDispatch()
+const Login = observer(() => {
+  const { loginStore } = useStore()
+  const { isLogin, setLoginStatus } = loginStore
 
   const usernameInput = createRef<HTMLInputElement>()
   const passwordInput = createRef<HTMLInputElement>()
 
   const [username, setUsername] = useState<string>('Hale')
   const [password, setPassword] = useState<string>('123456')
+
+  const onLogin = async () => {
+    await login({ username, password })
+    setLoginStatus(true)
+  }
 
   return (
     <>
@@ -36,26 +40,12 @@ const Login: React.FC = () => {
               value={password}
               onChange={event => setPassword(event.target.value)}
             />
-            <Button
-              onClick={() =>
-                dispatch({
-                  type: REQUEST_LOGIN,
-                  payload: {
-                    user: {
-                      username: usernameInput.current!.value,
-                      password: passwordInput.current!.value
-                    }
-                  }
-                })
-              }
-            >
-              登录
-            </Button>
+            <Button onClick={onLogin}>登录</Button>
           </LoginBox>
         </LoginWrapper>
       )}
     </>
   )
-}
+})
 
 export default Login

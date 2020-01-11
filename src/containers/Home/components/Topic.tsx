@@ -1,15 +1,15 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-
+import { observer } from 'mobx-react'
 import { TopicWrapper, TopicItem } from '../StyleComponents'
-import { RootState } from '../../../store'
+import { useStore } from '../../../hooks'
 
-const Topic: React.FC = () => {
-  const topicList = useSelector((state: RootState) => state.home.topicList)
+const Topic = observer(() => {
+  const { homeStore } = useStore()
+  const { topicList } = homeStore
 
   return (
     <TopicWrapper>
-      {topicList.map(item => {
+      {topicList.map((item: any) => {
         return (
           <TopicItem key={item.id}>
             <img className="topic-pic" src={item.imgUrl} alt="topic-pic" />
@@ -19,6 +19,6 @@ const Topic: React.FC = () => {
       })}
     </TopicWrapper>
   )
-}
+})
 
 export default Topic
