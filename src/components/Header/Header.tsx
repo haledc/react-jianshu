@@ -49,7 +49,7 @@ const Header = observer(() => {
     fetchData()
   }, [setList, setTotalPage])
 
-  if (newList && newList.length) {
+  if (newList?.length) {
     for (let i = (page - 1) * 10; i < page * 10; i++) {
       if (newList[i] !== undefined) {
         pageList.push(
