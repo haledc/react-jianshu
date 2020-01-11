@@ -14,28 +14,26 @@ const Home = observer(() => {
   const { isShowScroll, setScrollShow, setHomeInfo } = homeStore
 
   useEffect(() => {
+    const changeScrollShow = () => {
+      if (document.documentElement.scrollTop > 300) {
+        setScrollShow(true)
+      } else {
+        setScrollShow(false)
+      }
+    }
     window.addEventListener('scroll', changeScrollShow)
     return () => {
       window.removeEventListener('scroll', changeScrollShow)
     }
-  })
-
-  const fetchData = async () => {
-    const info = await getHomeInfo()
-    setHomeInfo(info)
-  }
+  }, [setScrollShow])
 
   useEffect(() => {
-    fetchData()
-  })
-
-  const changeScrollShow = () => {
-    if (document.documentElement.scrollTop > 300) {
-      setScrollShow(true)
-    } else {
-      setScrollShow(false)
+    const fetchData = async () => {
+      const info = await getHomeInfo()
+      setHomeInfo(info)
     }
-  }
+    fetchData()
+  }, [setHomeInfo])
 
   const handleScrollTop = () => {
     window.scrollTo(0, 0)

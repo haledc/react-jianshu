@@ -47,7 +47,7 @@ const Header = observer(() => {
       setTotalPage(Math.ceil(list.length / 10))
     }
     fetchData()
-  })
+  }, [setList, setTotalPage])
 
   if (newList && newList.length) {
     for (let i = (page - 1) * 10; i < page * 10; i++) {
