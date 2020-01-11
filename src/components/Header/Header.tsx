@@ -41,7 +41,7 @@ const Header: React.FC = () => {
   const newList = list
   const pageList = []
 
-  if (newList && newList.length) {
+  if (newList?.length) {
     for (let i = (page - 1) * 10; i < page * 10; i++) {
       if (newList[i] !== undefined) {
         pageList.push(
@@ -57,8 +57,7 @@ const Header: React.FC = () => {
     iconDom: HTMLElement
   ) => {
     let originAngle: string =
-      iconDom.style.transform && iconDom.style.transform.replace(/[^0-9]/gi, '')
-    originAngle = originAngle || '0'
+      iconDom?.style?.transform.replace(/[^0-9]/gi, '') || '0'
 
     iconDom.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
     if (page < totalPage) {
