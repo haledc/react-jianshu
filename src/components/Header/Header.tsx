@@ -62,12 +62,12 @@ const Header = observer(() => {
   const handleChangePage = (
     page: number,
     totalPage: number,
-    iconRef: HTMLElement
+    el: HTMLElement
   ) => {
     let originAngle: string =
-      iconRef?.style?.transform?.replace(/[^0-9]/gi, '') || '0'
+      el?.style?.transform?.replace(/[^0-9]/gi, '') || '0'
 
-    iconRef.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
+    el.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
 
     if (page < totalPage) {
       setPage(page + 1)
