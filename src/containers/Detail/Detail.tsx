@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { observer, useLocalStore } from 'mobx-react'
+import { useLocalStore, useObserver } from 'mobx-react'
 import { useParams } from 'react-router-dom'
 import { DetailWrapper, Header, Content } from './StyleComponents'
 import { getDetail } from '../../request'
 
-const Detail = observer(() => {
+const Detail = () => {
   const { id } = useParams()
   const localStore = useLocalStore(() => ({
     title: '',
@@ -23,12 +23,12 @@ const Detail = observer(() => {
     fetchData()
   }, [id, localStore])
 
-  return (
+  return useObserver(() => (
     <DetailWrapper>
       <Header>{localStore.title}</Header>
       <Content dangerouslySetInnerHTML={{ __html: localStore.content }} />
     </DetailWrapper>
-  )
-})
+  ))
+}
 
 export default Detail
