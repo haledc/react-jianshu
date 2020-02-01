@@ -14,10 +14,16 @@ const App = () => (
     <BrowserRouter>
       <div>
         <Header />
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/write" component={Write} />
-        <Route exact path="/detail/:id" component={Detail} />
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/write">
+          <Write />
+        </Route>
+        <Route exact path="/detail/:id" children={<Detail />} />
       </div>
     </BrowserRouter>
   </Provider>
