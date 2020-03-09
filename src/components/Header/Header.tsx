@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, RefObject } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  let spinIcon: HTMLElement
+  const spinRef = useRef<HTMLElement>(null)
   const newList = list
   const pageList = []
 
@@ -54,12 +54,13 @@ const Header: React.FC = () => {
   const handleChangePage = (
     page: number,
     totalPage: number,
-    iconDom: HTMLElement
+    ref: RefObject<HTMLElement>
   ) => {
     let originAngle: string =
-      iconDom?.style?.transform.replace(/[^0-9]/gi, '') || '0'
+      ref.current?.style?.transform.replace(/[^0-9]/gi, '') || '0'
 
-    iconDom.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
+    ref.current!.style.transform = `rotate(${parseInt(originAngle, 10) +
+      360}deg)`
     if (page < totalPage) {
       dispatch({ type: CHANGE_PAGE, payload: { page: page + 1 } })
     } else {
@@ -117,9 +118,9 @@ const Header: React.FC = () => {
                 <SearchInfoTitle>
                   热门搜索
                   <SearchInfoSwitch
-                    onClick={() => handleChangePage(page, totalPage, spinIcon)}
+                    onClick={() => handleChangePage(page, totalPage, spinRef!)}
                   >
-                    <i ref={el => (spinIcon = el!)} className="iconfont spin">
+                    <i ref={spinRef} className="iconfont spin">
                       &#xe851;
                     </i>
                     换一批

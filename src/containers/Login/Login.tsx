@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
@@ -10,8 +10,8 @@ const Login: React.FC = () => {
   const isLogin = useSelector((state: RootState) => state.login.isLogin)
   const dispatch = useDispatch()
 
-  const usernameInput = createRef<HTMLInputElement>()
-  const passwordInput = createRef<HTMLInputElement>()
+  const usernameRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
 
   const [username, setUsername] = useState<string>('Hale')
   const [password, setPassword] = useState<string>('123456')
@@ -25,13 +25,13 @@ const Login: React.FC = () => {
           <LoginBox>
             <Input
               placeholder="账户"
-              ref={usernameInput}
+              ref={usernameRef}
               value={username}
               onChange={event => setUsername(event.target.value)}
             />
             <Input
               placeholder="密码"
-              ref={passwordInput}
+              ref={passwordRef}
               type="password"
               value={password}
               onChange={event => setPassword(event.target.value)}
@@ -42,8 +42,8 @@ const Login: React.FC = () => {
                   type: REQUEST_LOGIN,
                   payload: {
                     user: {
-                      username: usernameInput.current!.value,
-                      password: passwordInput.current!.value
+                      username: usernameRef.current!.value,
+                      password: passwordRef.current!.value
                     }
                   }
                 })
