@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, RefObject } from 'react'
 import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 import { getList } from '../../request'
@@ -36,7 +36,7 @@ const Header = observer(() => {
   } = headerStore
 
   const { isLogin, setLoginStatus } = loginStore
-  let spinIcon: HTMLElement
+  let spinRef = useRef<HTMLElement>(null)
   const newList = list.slice()
   const pageList = []
 
@@ -62,12 +62,12 @@ const Header = observer(() => {
   const handleChangePage = (
     page: number,
     totalPage: number,
-    el: HTMLElement
+    ref: RefObject<HTMLElement>
   ) => {
     let originAngle: string =
-      el?.style?.transform?.replace(/[^0-9]/gi, '') || '0'
+    ref.current?.style?.transform?.replace(/[^0-9]/gi, '') || '0'
 
-    el.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
+    ref.current!.style.transform = `rotate(${parseInt(originAngle, 10) + 360}deg)`
 
     if (page < totalPage) {
       setPage(page + 1)
@@ -118,9 +118,9 @@ const Header = observer(() => {
                 <SearchInfoTitle>
                   热门搜索
                   <SearchInfoSwitch
-                    onClick={() => handleChangePage(page, totalPage, spinIcon)}
+                    onClick={() => handleChangePage(page, totalPage, spinRef)}
                   >
-                    <i ref={el => (spinIcon = el!)} className="iconfont spin">
+                    <i ref={spinRef} className="iconfont spin">
                       &#xe851;
                     </i>
                     换一批
