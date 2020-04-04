@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import App from './App'
 import GlobalStyle from './GlobalStyle'
-import { FontStyle } from './assets/static/iconfont/iconfont'
+import { FontStyle } from './assets/iconfont/iconfont'
 
 const app = (
   <Fragment>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import logoPic from '../../assets/static/logo.png'
+import logoPic from '../../assets/logo.png'
 
 export const HeaderWrapper = styled.div`
   z-index: 1;
